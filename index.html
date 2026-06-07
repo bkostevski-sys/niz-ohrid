@@ -62,12 +62,12 @@
   <!-- КОНТАКТ -->
   <section id="rezervacija" class="section bg-light">
     <h2>Резервирајте ја вашата тура</h2>
-    <form id="contactForm" action="https://formspree.io/f/ВАШЕТО_ФОРМСПРИ_ЛИНК" method="POST">
-      <input type="text" name="name" placeholder="Ваше име" required>
-      <input type="tel" name="phone" placeholder="Телефон / WhatsApp" required>
-      <input type="email" name="email" placeholder="E-mail адреса">
-      <textarea name="message" placeholder="Кога сакате да ја направите турата? Што би сакале да видите?" rows="5" required></textarea>
-      <button type="submit" class="btn">Испрати барање</button>
+    <form id="contactForm">
+      <input type="text" id="name" name="name" placeholder="Ваше име" required>
+      <input type="tel" id="phone" name="phone" placeholder="Телефон / WhatsApp" required>
+      <input type="email" id="email" name="email" placeholder="E-mail адреса">
+      <textarea id="message" name="message" placeholder="Кога сакате да ја направите турата? Што би сакале да видите?" rows="5" required></textarea>
+      <button type="button" class="btn" onclick="sendMail()">Испрати барање</button>
     </form>
   </section>
 
@@ -75,6 +75,30 @@
     <p>© 2026 Низ Охрид • Боро Костевски • Tourist Guide & Travel</p>
     <p>Охрид, Македонија | <a href="https://wa.me/38974207371">WhatsApp: +389 74 207 371</a> | <a href="mailto:throughohrid@gmail.com">throughohrid@gmail.com</a></p>
   </footer>
+
+  <script>
+    function sendMail() {
+      const name    = document.getElementById('name').value.trim();
+      const phone   = document.getElementById('phone').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !phone || !message) {
+        alert('Ве молиме пополнете ги задолжителните полиња.');
+        return;
+      }
+
+      const subject = encodeURIComponent('Ново барање за тура - ' + name);
+      const body = encodeURIComponent(
+        'Ime: ' + name + '\n' +
+        'Telefon / WhatsApp: ' + phone + '\n' +
+        'E-mail: ' + (email || 'не е внесен') + '\n\n' +
+        'Poraka:\n' + message
+      );
+
+      window.location.href = 'mailto:throughohrid@gmail.com?subject=' + subject + '&body=' + body;
+    }
+  </script>
 
   <script src="script.js"></script>
 </body>
